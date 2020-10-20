@@ -84,6 +84,13 @@ class CupcakeViewsTestCase(TestCase):
                 }
             })
 
+    def test_missing_cupcake(self):
+        with app.test_client() as client:
+            url = "/api/cupcakes/99999"
+            resp = client.get(url)
+
+            self.assertEqual(resp.status_code, 404)
+
     def test_create_cupcake(self):
         with app.test_client() as client:
             url = "/api/cupcakes"
@@ -107,3 +114,50 @@ class CupcakeViewsTestCase(TestCase):
             })
 
             self.assertEqual(Cupcake.query.count(), 2)
+
+    def test_update_cupcake(self):
+        with app.test_client() as client:
+            url = f"/api/cupcakes/{self.cupcake.id}"
+            resp = client.patch(url, json=CUPCAKE_DATA_2)
+
+            self.assertEqual(resp.status_code, 200)
+
+            data = resp.json
+            self.assertEqual(data, {
+                "cupcake": {
+                    'id': self.cupcake.id,
+                    "flavor": "TestFlavor2",
+                    "size": "TestSize2",
+                    "rating": 10,
+                    "image": "http://test.com/cupcake2.jpg"
+                }
+            })
+
+            self.assertEqual(Cupcake.query.count(), 1)
+
+    def test_update_missing_cupcake(self):
+        with app.test_client() as client:
+            url = "/api/cupcakes/56438"
+            resp = client.patch(url, json=CUPCAKE_DATA_2)
+
+            self.assertEqual(resp.status_code, 404)
+
+    def test_delete_cupcake(self):
+        with app.test_client() as client:
+            url = f"/api/cupcakes/{self.cupcake.id}"
+            resp = client.delete(url)
+
+            self.assertEqual(resp.status_code, 200)
+
+            data = resp.json
+
+            self.assertEqual(data, {"message": f"Deleted {self.cupcake.flavor} cupcake"})
+
+            self.assertEqual(Cupcake.query.count(), 0)
+
+    def test_delete_missing_cupcake(self):
+        with app.test_client() as client:
+            url = "/api/cupcakes/98347"
+            resp = client.delete(url)
+
+            self.assertEqual(resp.status_code, 404)

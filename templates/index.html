@@ -11,11 +11,39 @@
 <body>
 
     <h1>Welcome to the Cupcakes Page!!</h1>
-    {% for cupcake in cupcakes %}
-        <ul>
-            <li>{{ cupcake.flavor }}</li>
-        </ul>
-    {% endfor %}
     
+    <ul id="cupcakes-list">
+    </ul>
+
+    <h2>Add a New Cupcake!</h2>
+
+    <form id="new-cupcake-form">
+        <div>
+            <label for="form-flavor">Flavor: </label>
+            <input name="flavor" id="form-flavor">
+        </div>
+
+        <div>
+            <label for="form-size">Size: </label>
+            <input name="size" id="form-size">
+        </div>
+
+        <div>
+            <label for="form-rating">Rating: </label>
+            <input type="number" name="rating" id="form-rating">
+        </div>
+
+        <div>
+            <label for="form-image">Image URL: </label>
+            <input name="image" id="form-image">
+        </div>
+
+        <button>Add Cupcake!</button>
+    </form>
+
+    <script src="https://unpkg.com/jquery"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="/static/cupcakes.js"></script>
+
 </body>
 </html>

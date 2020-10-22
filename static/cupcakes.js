@@ -28,25 +28,24 @@ async function showInitialCupcakes() {
 
 /** form to handle adding new cupcake */
 
-$("#new-cupcake-form").on("submit", async function(e) {
+$("#new-cupcake-form").on("submit", async function (e) {
     e.preventDefault();
 
-    let flavor = $('#form-flavor').val();
-    let size = $('form-size').val();
-    let rating = $('form-rating').val();
-    let image = $('form-image').val();
+    let flavor = $("#form-flavor").val();
+    let size = $("#form-size").val();
+    let rating = $("#form-rating").val();
+    let image = $("#form-image").val();
 
-    const newCupcakeResp = await axios.post(`${BASE_URL}/cupcakes`, {
+    const newCupcakeResponse = await axios.post(`${BASE_URL}/cupcakes`, {
         flavor,
         size,
         rating,
         image
     });
 
-    let newCupcake = $(generateCupcakeHTML(newCupcakeResp.data.cupcake));
-
-    $('#cupcakes-list').append(newCupcake);
-    $('#new-cupcake-form').trigger("reset");
+    let newCupcake = $(generateCupcakeHTML(newCupcakeResponse.data.cupcake));
+    $("#cupcakes-list").append(newCupcake);
+    $("#new-cupcake-form").trigger("reset");
 });
 
 /** handle deleting a cupcake */

@@ -1,7 +1,6 @@
 """Flask app for Cupcakes"""
 
 from flask import Flask, request, jsonify, render_template
-
 from models import db, connect_db, Cupcake
 
 app = Flask(__name__)
@@ -37,7 +36,7 @@ def create_cupcake():
     """ Make a new cupcake and return data """
 
     data = request.json
-
+    
     cupcake = Cupcake(
         flavor=data['flavor'],
         size=data['size'],
@@ -80,4 +79,4 @@ def delete_cupcake(cupcake_id):
 
     return jsonify(message=f"Deleted {cupcake.flavor} cupcake")
 
-    
+
